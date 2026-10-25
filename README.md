@@ -9,7 +9,7 @@
 [![Clerk Auth](https://img.shields.io/badge/Auth-Clerk-6C47FF?logo=clerk)](https://clerk.com/)
 [![AI SDK 7](https://img.shields.io/badge/AI_SDK-v7-000000?logo=vercel)](https://sdk.vercel.ai/)
 
-**OmniGPT** is an enterprise-ready, full-stack AI conversational platform built with **Next.js 16 App Router**, **React 19**, and the **Vercel AI SDK**. It features real-time Server-Sent Events (SSE) token streaming, multi-step tool execution with real-time web search, serverless PostgreSQL persistence, Shiki code syntax highlighting, KaTeX mathematical typesetting, and end-to-end authentication via Clerk.
+**OmniGPT**is full-stack AI conversational platform built with **Next.js 16 App Router**, **React 19**, and the **Vercel AI SDK**. It features real-time Server-Sent Events (SSE) token streaming, multi-step tool execution with real-time web search, serverless PostgreSQL persistence, Shiki code syntax highlighting, KaTeX mathematical typesetting, and end-to-end authentication via Clerk.
 
 ---
 
