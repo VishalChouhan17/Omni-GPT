@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "streamdown/styles.css";
+@import "katex/dist/katex.min.css";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -50,71 +52,71 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.525 0.223 3.958);
-  --primary-foreground: oklch(0.971 0.014 343.198);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.488 0.243 264.376);
+  --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.871 0.006 286.286);
-  --chart-2: oklch(0.552 0.016 285.938);
-  --chart-3: oklch(0.442 0.017 285.786);
-  --chart-4: oklch(0.37 0.013 285.805);
-  --chart-5: oklch(0.274 0.006 286.033);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.592 0.249 0.584);
-  --sidebar-primary-foreground: oklch(0.971 0.014 343.198);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.546 0.245 262.881);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.21 0.006 285.885);
+  --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0.006 285.885);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.459 0.187 3.815);
-  --primary-foreground: oklch(0.971 0.014 343.198);
+  --primary: oklch(0.424 0.199 265.638);
+  --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.552 0.016 285.938);
-  --chart-1: oklch(0.871 0.006 286.286);
-  --chart-2: oklch(0.552 0.016 285.938);
-  --chart-3: oklch(0.442 0.017 285.786);
-  --chart-4: oklch(0.37 0.013 285.805);
-  --chart-5: oklch(0.274 0.006 286.033);
-  --sidebar: oklch(0.21 0.006 285.885);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.656 0.241 354.308);
-  --sidebar-primary-foreground: oklch(0.971 0.014 343.198);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-primary: oklch(0.623 0.214 259.815);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+  --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -127,4 +129,176 @@
   html {
     @apply font-sans;
   }
+}
+
+/* =========================================================================
+   Rich Markdown & Typography Styles
+   ========================================================================= */
+
+.markdown-body,
+[data-streamdown] {
+  color: var(--foreground);
+  line-height: 1.7;
+  font-size: 0.9375rem;
+  word-break: break-word;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+[data-streamdown] h1,
+[data-streamdown] h2,
+[data-streamdown] h3,
+[data-streamdown] h4 {
+  font-weight: 600;
+  color: var(--foreground);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.markdown-body h1, [data-streamdown] h1 { font-size: 1.625rem; }
+.markdown-body h2, [data-streamdown] h2 { font-size: 1.35rem; }
+.markdown-body h3, [data-streamdown] h3 { font-size: 1.15rem; }
+.markdown-body h4, [data-streamdown] h4 { font-size: 1rem; }
+
+.markdown-body p,
+[data-streamdown] p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.markdown-body strong,
+.markdown-body b,
+[data-streamdown] strong,
+[data-streamdown] b {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.markdown-body ul,
+[data-streamdown] ul {
+  list-style-type: disc !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem !important;
+}
+
+.markdown-body ol,
+[data-streamdown] ol {
+  list-style-type: decimal !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem !important;
+}
+
+.markdown-body li,
+[data-streamdown] li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.markdown-body blockquote,
+[data-streamdown] blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.markdown-body table,
+[data-streamdown] table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.markdown-body th,
+.markdown-body td,
+[data-streamdown] th,
+[data-streamdown] td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.markdown-body th,
+[data-streamdown] th {
+  background-color: var(--muted);
+  font-weight: 600;
+}
+
+.markdown-body code:not(pre code),
+[data-streamdown] code:not(pre code) {
+  background-color: var(--muted);
+  color: var(--foreground);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.375rem;
+  font-size: 0.85em;
+  font-family: var(--font-mono, monospace);
+  border: 1px solid var(--border);
+}
+
+/* =========================================================================
+   Code Block & Shiki Syntax Highlighting Styles
+   ========================================================================= */
+
+[data-streamdown="code-block"] {
+  border-radius: 0.75rem !important;
+  border: 1px solid var(--border) !important;
+  background-color: #0f141c !important;
+  margin: 1.25rem 0 !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+:root:not(.dark) [data-streamdown="code-block"] {
+  background-color: #f6f8fa !important;
+}
+
+[data-streamdown="code-block-header"] {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 0.5rem 1rem !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 0.75rem !important;
+  color: var(--muted-foreground) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+:root:not(.dark) [data-streamdown="code-block-header"] {
+  background-color: #eef1f5 !important;
+}
+
+[data-streamdown="code-block-body"] {
+  background: transparent !important;
+  padding: 1rem !important;
+}
+
+/* Shiki syntax highlighting token colors */
+.dark [data-streamdown="code-block"] span[style*="--shiki-dark"] {
+  color: var(--shiki-dark) !important;
+}
+
+:root:not(.dark) [data-streamdown="code-block"] span[style*="color"] {
+  /* uses Shiki inline color */
+}
+
+/* KaTeX formula display styling */
+.katex-display {
+  margin: 1rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+
+.katex {
+  font-size: 1.1em;
 }
