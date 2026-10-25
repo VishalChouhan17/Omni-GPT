@@ -207,13 +207,3 @@ Once deployed, verify these core flows:
 - [ ] **Chat Persistence**: Refresh the browser; verify your previous chat appears in the sidebar and loads conversation history.
 
 ---
-
-## 💼 Resume Bullet Points
-
-> *Feel free to use or adapt these for your resume:*
-
-- **Full-Stack AI Platform (OmniGPT)**: Engineered a production-ready conversational AI platform using **Next.js 16**, **React 19**, and **Vercel AI SDK**, featuring sub-second Time-To-First-Token SSE streaming and multi-step tool execution.
-- **Autonomous Agent Tool Calling**: Built a real-time web search agent tool integrating DuckDuckGo and Tavily API into the LLM stream cycle, providing real-time data retrieval with client-side loading indicators.
-- **Serverless PostgreSQL & Data Modeling**: Designed a normalized relational schema using **Prisma ORM** on **Neon Serverless PostgreSQL** with connection pooling, composite indexes, and optimistic cache invalidation via **TanStack React Query**.
-- **Enterprise Security & Auth**: Enforced route protection, user session synchronization, and row-level conversation ownership utilizing **Clerk Auth** and Next.js Server Actions.
-- **Advanced Markdown & Typesetting Engine**: Integrated **Shiki** for syntax-highlighted code blocks with line numbering and clipboard utilities, and **KaTeX** for inline and display LaTeX mathematical notation.
