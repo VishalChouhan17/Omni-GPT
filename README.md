@@ -1,4 +1,4 @@
-# 🚀 OmniGPT — Next-Generation AI Chat Platform
+# 🚀 OmniGPT — Production Full-Stack AI Chat Platform
 
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.4-black?logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.3-blue?logo=react)](https://react.dev/)
@@ -7,12 +7,13 @@
 [![Prisma](https://img.shields.io/badge/Prisma-7.10-2D3748?logo=prisma)](https://www.prisma.io/)
 [![Neon PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon_Serverless-336791?logo=postgresql)](https://neon.tech/)
 [![Clerk Auth](https://img.shields.io/badge/Auth-Clerk-6C47FF?logo=clerk)](https://clerk.com/)
+[![AI SDK 7](https://img.shields.io/badge/AI_SDK-v7-000000?logo=vercel)](https://sdk.vercel.ai/)
 
-**OmniGPT** is a production-ready, full-stack conversational AI platform built with **Next.js 16 App Router**, **React 19**, and the **Vercel AI SDK**. It features real-time Server-Sent Events (SSE) token streaming, relational persistence with PostgreSQL & Prisma, optimistic state synchronization via TanStack Query, and authentication backed by Clerk.
+**OmniGPT** is an enterprise-ready, full-stack AI conversational platform built with **Next.js 16 App Router**, **React 19**, and the **Vercel AI SDK**. It features real-time Server-Sent Events (SSE) token streaming, multi-step tool execution with real-time web search, serverless PostgreSQL persistence, Shiki code syntax highlighting, KaTeX mathematical typesetting, and end-to-end authentication via Clerk.
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## 🏗️ System Architecture & Execution Flow
 
 ```text
 ┌─────────────────┐       HTTP / SSE Stream       ┌────────────────────────┐
@@ -20,31 +21,35 @@
 │  (React 19)     │                               │  (/api/chat route)     │
 └────────┬────────┘                               └───────────┬────────────┘
          │                                                    │
-         │ TanStack Query (Optimistic UI)                     │ OpenAI SDK
+         │ TanStack Query (Optimistic UI)                     │ Vercel AI SDK (streamText)
          ▼                                                    ▼
 ┌─────────────────┐                               ┌────────────────────────┐
-│  App Sidebar &  │                               │  OpenAI API            │
+│  App Sidebar &  │                               │  OpenAI / AI Gateway   │
 │  Chat History   │                               │  (gpt-4o / gpt-4o-mini)│
-└────────┬────────┘                               └────────────────────────┘
-         │
-         │ Prisma ORM (Connection Pooler)
-         ▼
-┌─────────────────────────────┐
-│  Neon Serverless PostgreSQL │
-│  (Users, Chats, Messages)   │
-└─────────────────────────────┘
+└────────┬────────┘                               └───────────┬────────────┘
+         │                                                    │
+         │ Prisma ORM (PgPool Adapter)                        │ Tool Call Loop (stopWhen)
+         ▼                                                    ▼
+┌─────────────────────────────┐                   ┌────────────────────────┐
+│  Neon Serverless PostgreSQL │                   │  Web Search Tool       │
+│  (Users, Chats, Messages)   │                   │  (DuckDuckGo / Tavily) │
+└─────────────────────────────┘                   └────────────────────────┘
 ```
 
 ---
 
-## ✨ Key Engineering Highlights
+## ✨ Key Features & Engineering Highlights
 
-- **Real-Time Token Streaming**: High-throughput response streaming powered by Vercel AI SDK (`toUIMessageStreamResponse`), delivering low Time-To-First-Token (TTFT) latency.
-- **Relational Chat Persistence**: Multi-turn chat persistence in serverless PostgreSQL using Prisma ORM with indexed message lookup and title auto-generation from first prompts.
-- **Next.js 16 App Router Architecture**: Uses modern layout grouping `(root)` vs `(auth)`, dynamic route handlers, Server Actions for mutations, and Suspense boundaries.
-- **Authentication & Onboarding**: Clerk authentication integrated at the root layout with auto-provisioning database sync and route protection via `auth.protect()`.
-- **Rich AI Render Engine**: Syntax highlighting via Shiki and Streamdown supporting code blocks, mathematical equations via KaTeX, and Mermaid diagrams.
-- **Theme & Modern Design System**: Responsive sidebar layout, dark/light theme toggle powered by `next-themes`, and Tailwind CSS v4 design tokens.
+- ⚡ **Low-Latency Streaming**: Sub-second Time-To-First-Token (TTFT) via Vercel AI SDK (`toUIMessageStreamResponse`) over Server-Sent Events (SSE).
+- 🌐 **Real-Time Web Search Tool**: Multi-step AI agent calling with live internet data retrieval (DuckDuckGo zero-config fallback + optional Tavily search API) for real-time weather, news, and live facts.
+- 🎨 **Rich AI Rendering Engine**:
+  - **Syntax Highlighting**: Shiki-powered server/client code blocks with language badges, copy-to-clipboard buttons, and line numbers.
+  - **Mathematical Typesetting**: KaTeX math rendering supporting inline (`$...$`) and block (`$$...$$`) LaTeX formulas.
+  - **Markdown Hierarchy**: Headers, formatted tables, task lists, and quotes.
+- 🗄️ **Relational Multi-Turn Persistence**: PostgreSQL schema managed with Prisma ORM 7; automatically saves conversations, auto-generates chat titles from the initial prompt, and loads historical context.
+- 🔐 **Production-Grade Auth & Security**: User authentication and session management via Clerk with middleware route protection (`auth.protect()`) and user-isolated conversation ownership.
+- 🌗 **Responsive Theme System**: Dark and light mode toggle powered by `next-themes` and modern Tailwind CSS v4 design tokens.
+- ⚡ **Optimistic Cache Management**: TanStack React Query v5 handles sidebar chat listing, active status indicators, and cache updates.
 
 ---
 
@@ -53,15 +58,15 @@
 | Layer | Technologies |
 | :--- | :--- |
 | **Frontend** | React 19, Next.js 16 (Turbopack), Tailwind CSS v4, Base UI, Lucide Icons |
-| **AI & Streaming** | Vercel AI SDK 5/7, `@ai-sdk/openai`, Server-Sent Events (SSE) |
+| **AI & Agent Tools**| Vercel AI SDK 7, `@ai-sdk/openai`, multi-step tool calling, DuckDuckGo / Tavily |
 | **State & Cache** | TanStack React Query v5, Optimistic UI Cache Invalidation |
-| **Database & ORM**| PostgreSQL (Neon Serverless), Prisma ORM 7 with PgPool adapter |
-| **Auth & Security**| Clerk Auth, Protected API Routes & Server Actions |
-| **Markdown / Code**| Streamdown, Shiki syntax highlighter, KaTeX math rendering |
+| **Database & ORM**| PostgreSQL (Neon Serverless), Prisma ORM 7 with `@prisma/adapter-pg` |
+| **Auth & Security**| Clerk Auth (`@clerk/nextjs`), Protected API Routes & Middleware |
+| **Markdown / Highlighting**| Streamdown, Shiki (`@streamdown/code`), KaTeX (`@streamdown/math`) |
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Directory Structure
 
 ```text
 op-gpt/
@@ -71,59 +76,135 @@ op-gpt/
 │   │   ├── c/[id]/page.tsx    # Dynamic chat conversation view
 │   │   ├── layout.tsx         # Sidebar shell & route guard
 │   │   └── page.tsx           # Auto-provisioning new chat root
-│   ├── api/chat/route.ts      # SSE streaming endpoint with OpenAI integration
-│   └── globals.css            # Tailwind CSS v4 styling & theme tokens
+│   ├── api/chat/route.ts      # Multi-step SSE streaming & tool execution endpoint
+│   └── globals.css            # Tailwind CSS v4 styles & Shiki code block tokens
 ├── components/
 │   ├── ai-elements/           # Conversation scroller, message bubble, streaming loader
 │   ├── providers/             # Theme & React Query client providers
-│   └── ui/                    # Reusable UI primitives (dialogs, sidebars, inputs)
+│   └── ui/                    # Reusable UI primitives (dialogs, sidebars, buttons)
 ├── features/
-│   ├── ai/                    # Model resolvers & chat store persistence logic
-│   ├── auth/                  # Clerk onboarding & user authorization hooks
+│   ├── ai/
+│   │   ├── actions/           # Chat store persistence (load & save messages)
+│   │   ├── tools/             # AI tools (web-search with DuckDuckGo / Tavily)
+│   │   └── utils/             # Model resolver & system prompt configuration
+│   ├── auth/                  # Clerk user onboarding & database sync actions
 │   └── conversation/          # Sidebar, message composer, action hooks & mutations
 ├── lib/
-│   ├── db.ts                  # Prisma client instance with Neon connection pool
-│   └── highlighter.tsx        # Shiki streaming syntax highlighter
+│   └── db.ts                  # Prisma Client instance with PgPool adapter
 └── prisma/
     └── schema.prisma          # Database schema (User, Conversation, Message)
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Development Setup
 
-### 1. Clone & Install
+### 1. Prerequisites
+- [Bun](https://bun.sh/) (or Node.js 18+)
+- A [Neon](https://neon.tech/) or [Supabase](https://supabase.com/) PostgreSQL database
+- A [Clerk](https://clerk.com/) account
+- An [OpenAI](https://platform.openai.com/) API Key
+
+### 2. Clone & Install
 ```bash
 git clone https://github.com/your-username/omni-gpt.git
 cd omni-gpt
-bun install  # or npm install
+bun install
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file in the root directory:
-```env
-DATABASE_URL="postgresql://user:password@endpoint.neon.tech/neondb?sslmode=require"
+### 3. Configure Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
 
+Fill in the variables in `.env`:
+```env
+# PostgreSQL Connection (Neon Serverless recommended)
+DATABASE_URL="postgresql://user:password@endpoint-pooler.region.neon.tech/neondb?sslmode=require"
+
+# Clerk Authentication (Development keys)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
 CLERK_SECRET_KEY="sk_test_..."
-NEXT_PUBLIC_CLERK_SIGNIN_URL="/signin"
-NEXT_PUBLIC_CLERK_SIGNIN_FALLBACK_URL="/"
-NEXT_PUBLIC_CLERK_SIGNUP_FALLBACK_URL="/"
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/signin"
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_URL="/"
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_URL="/"
 
+# OpenAI API Key
 OPENAI_API_KEY="sk-proj-..."
+
+# Optional: Tavily Search (Free DuckDuckGo fallback is active by default)
+# TAVILY_API_KEY="tvly-..."
 ```
 
-### 3. Setup Database Schema
+### 4. Push Database Schema
 ```bash
 bun x prisma db push
-# or bun x prisma migrate dev
 ```
 
-### 4. Run Development Server
+### 5. Run the App
 ```bash
 bun dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🌐 Production Deployment Guide (Vercel + Neon + Clerk)
+
+To ensure login, database persistence, streaming, and tools work reliably in production, follow these steps:
+
+### Step 1: Deploy Database (Neon Serverless PostgreSQL)
+1. In your [Neon Console](https://console.neon.tech/), create a project.
+2. Under **Connection Details**, ensure **Connection Pooling** is toggled **ON** (pooled connection prevents connection limits in serverless environments).
+3. Copy the pooled connection string.
+4. Run migrations against your production database:
+   ```bash
+   DATABASE_URL="<your-production-pooled-database-url>" bun x prisma db push
+   ```
+
+### Step 2: Configure Clerk for Production
+1. In your [Clerk Dashboard](https://dashboard.clerk.com/):
+   - Switch your application from **Development** mode to **Production** (or create a production instance).
+   - Go to **API Keys** and copy your production keys:
+     - `pk_live_...` (Publishable Key)
+     - `sk_live_...` (Secret Key)
+   - Go to **Configure > Domains & Paths**:
+     - Set your production URL (e.g. `https://omni-gpt.vercel.app` or your custom domain).
+   - Under **Paths**, verify sign-in is set to `/signin`.
+
+### Step 3: Deploy to Vercel
+1. Push your repository to GitHub / GitLab.
+2. In the [Vercel Dashboard](https://vercel.com/):
+   - Click **Add New > Project** and import your repository.
+   - Framework Preset: **Next.js** (detected automatically).
+   - Build Command: `prisma generate && next build` (configured in `package.json`).
+3. Add the **Environment Variables** in Vercel project settings:
+
+| Variable Name | Value Description |
+| :--- | :--- |
+| `DATABASE_URL` | Pooled Neon PostgreSQL connection string (`sslmode=require`) |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk production publishable key (`pk_live_...`) |
+| `CLERK_SECRET_KEY` | Clerk production secret key (`sk_live_...`) |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/signin` |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_URL` | `/` |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_URL` | `/` |
+| `OPENAI_API_KEY` | OpenAI API Key (`sk-proj-...`) |
+| `TAVILY_API_KEY` | *(Optional)* Tavily search API key |
+
+4. Click **Deploy**.
+
+---
+
+## ✅ Post-Deployment Smoke Test Checklist
+
+Once deployed, verify these core flows:
+- [ ] **Authentication**: Open your deployed URL (`https://your-domain.vercel.app`), verify redirect to `/signin`, and complete sign-up / login.
+- [ ] **Database Provisioning**: Verify the user record appears in your Neon database `User` table upon first login.
+- [ ] **Streaming Chat**: Send a coding question (e.g. *"Write a TypeScript debounce function"*); ensure code syntax highlighting and token streaming work smoothly.
+- [ ] **Math Rendering**: Ask a math question (e.g. *"Show Bayes' Theorem and quadratic formula"*); verify formulas render cleanly via KaTeX.
+- [ ] **Web Search Tool**: Ask a live question (e.g. *"What is the current weather in Tokyo today?"*); verify the AI invokes `searchWeb` and answers with live data.
+- [ ] **Chat Persistence**: Refresh the browser; verify your previous chat appears in the sidebar and loads conversation history.
 
 ---
 
@@ -131,7 +212,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 > *Feel free to use or adapt these for your resume:*
 
-- **Full-Stack AI Chat Platform (OmniGPT)**: Architected and built a responsive AI chat platform using **Next.js 16**, **React 19**, and **Vercel AI SDK**, supporting real-time SSE streaming with sub-second Time-To-First-Token latency.
-- **Relational Data Modeling & Performance**: Designed normalized PostgreSQL database schema with Prisma ORM; optimized queries with composite indexes on user conversations and message history.
-- **Optimistic State Management**: Integrated **TanStack React Query** for client-side optimistic UI updates, active chat status indicators, and automatic query cache invalidation on stream completion.
-- **Enterprise-Grade Security**: Enforced route protection and user session sync using **Clerk Authentication** and Server Actions, verifying user ownership across all message operations.
+- **Full-Stack AI Platform (OmniGPT)**: Engineered a production-ready conversational AI platform using **Next.js 16**, **React 19**, and **Vercel AI SDK**, featuring sub-second Time-To-First-Token SSE streaming and multi-step tool execution.
+- **Autonomous Agent Tool Calling**: Built a real-time web search agent tool integrating DuckDuckGo and Tavily API into the LLM stream cycle, providing real-time data retrieval with client-side loading indicators.
+- **Serverless PostgreSQL & Data Modeling**: Designed a normalized relational schema using **Prisma ORM** on **Neon Serverless PostgreSQL** with connection pooling, composite indexes, and optimistic cache invalidation via **TanStack React Query**.
+- **Enterprise Security & Auth**: Enforced route protection, user session synchronization, and row-level conversation ownership utilizing **Clerk Auth** and Next.js Server Actions.
+- **Advanced Markdown & Typesetting Engine**: Integrated **Shiki** for syntax-highlighted code blocks with line numbering and clipboard utilities, and **KaTeX** for inline and display LaTeX mathematical notation.

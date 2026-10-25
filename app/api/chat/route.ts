@@ -1,9 +1,10 @@
 import { loadChatMessages, saveChatMessages } from "@/features/ai/actions/chat-store";
+import { webSearchTool } from "@/features/ai/tools/web-search";
 import { getChatModel } from "@/features/ai/utils/model";
 import { requireUser } from "@/features/auth/action/require-user";
 import { prisma } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { convertToModelMessages, createIdGenerator, streamText, type UIMessage } from "ai";
+import { convertToModelMessages, createIdGenerator, stepCountIs, streamText, type UIMessage } from "ai";
 
 /**
  * POST /api/chat — Streams an AI assistant reply for a conversation.
@@ -56,8 +57,13 @@ export async function POST(req: Request) {
 Always format your answers with clean, beautiful GitHub-flavored Markdown:
 - Code: Always enclose code in fenced code blocks with the language tag (e.g., \`\`\`javascript, \`\`\`python, \`\`\`typescript, \`\`\`json, \`\`\`html, \`\`\`css, \`\`\`sql).
 - Mathematics: Always format math formulas using LaTeX with dollar sign delimiters: use $...$ for inline formulas (e.g. $45 \\times 12 + \\sqrt{16} = 544$) and $$...$$ for block formulas. Never output math inside plain parentheses like ( \\sqrt{16} ) or brackets [ 45 \\times 12 ].
-- Structure: Use markdown headers (##, ###), bullet lists (- or *), bold text (**term**), and tables when comparing or organizing data.`,
+- Structure: Use markdown headers (##, ###), bullet lists (- or *), bold text (**term**), and tables when comparing or organizing data.
+- Real-time queries: When asked about current events, real-time facts, recent news, or live weather/temperatures, use the searchWeb tool to retrieve current information before answering.`,
             messages: modelMessages,
+            tools: {
+                searchWeb: webSearchTool,
+            },
+            stopWhen: stepCountIs(5),
         });
 
         return result.toUIMessageStreamResponse({

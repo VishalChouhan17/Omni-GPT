@@ -287,10 +287,6 @@
   color: var(--shiki-dark) !important;
 }
 
-:root:not(.dark) [data-streamdown="code-block"] span[style*="color"] {
-  /* uses Shiki inline color */
-}
-
 /* KaTeX formula display styling */
 .katex-display {
   margin: 1rem 0 !important;

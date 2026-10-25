@@ -32,19 +32,37 @@ type ChatMessagesProps = {
  * Renders the conversation message list with markdown responses and a loading indicator.
  */
 export function ChatMessages({ messages, status }: ChatMessagesProps) {
-  const isWaiting =
-    status === "submitted" && messages.at(-1)?.role === "user";
+  const lastMessage = messages.at(-1);
+  const isWaiting = status === "submitted" && lastMessage?.role === "user";
 
   return (
     <Conversation>
       <ConversationContent className="mx-auto w-full max-w-3xl px-4 py-8 md:px-6">
-        {messages.map((message) => (
-          <Message key={message.id} from={message.role}>
-            <MessageContent>
-              <MessageResponse>{getMessageText(message)}</MessageResponse>
-            </MessageContent>
-          </Message>
-        ))}
+        {messages.map((message) => {
+          const text = getMessageText(message);
+          if (!text && message.role === "assistant" && (status === "streaming" || status === "submitted")) {
+            return (
+              <Message key={message.id} from={message.role}>
+                <MessageContent>
+                  <div className="flex items-center gap-2 py-1 text-sm text-muted-foreground animate-pulse">
+                    <Loader size={15} />
+                    <span>Searching the web & analyzing results...</span>
+                  </div>
+                </MessageContent>
+              </Message>
+            );
+          }
+
+          if (!text && message.role === "assistant") return null;
+
+          return (
+            <Message key={message.id} from={message.role}>
+              <MessageContent>
+                <MessageResponse>{text}</MessageResponse>
+              </MessageContent>
+            </Message>
+          );
+        })}
 
         {isWaiting ? (
           <Message from="assistant">
