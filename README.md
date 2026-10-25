@@ -125,13 +125,3 @@ bun dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
----
-
-## 💼 Resume Bullet Points
-
-> *Feel free to use or adapt these for your resume:*
-
-- **Full-Stack AI Chat Platform (OmniGPT)**: Architected and built a responsive AI chat platform using **Next.js 16**, **React 19**, and **Vercel AI SDK**, supporting real-time SSE streaming with sub-second Time-To-First-Token latency.
-- **Relational Data Modeling & Performance**: Designed normalized PostgreSQL database schema with Prisma ORM; optimized queries with composite indexes on user conversations and message history.
-- **Optimistic State Management**: Integrated **TanStack React Query** for client-side optimistic UI updates, active chat status indicators, and automatic query cache invalidation on stream completion.
-- **Enterprise-Grade Security**: Enforced route protection and user session sync using **Clerk Authentication** and Server Actions, verifying user ownership across all message operations.
