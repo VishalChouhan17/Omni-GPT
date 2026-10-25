@@ -44,7 +44,7 @@ export function ChatMessages({ messages, status }: ChatMessagesProps) {
             return (
               <Message key={message.id} from={message.role}>
                 <MessageContent>
-                  <div className="flex items-center gap-2 py-1 text-sm text-muted-foreground animate-pulse">
+                  <div className="flex items-center gap-2 py-1 text-[15px] text-muted-foreground animate-pulse">
                     <Loader size={15} />
                     <span>Searching the web & analyzing results...</span>
                   </div>

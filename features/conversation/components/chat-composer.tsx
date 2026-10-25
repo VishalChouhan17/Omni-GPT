@@ -74,7 +74,7 @@ export function ChatComposer({
           placeholder={placeholder}
           disabled={isSending}
           rows={1}
-          className="max-h-48 min-h-12 py-3.5 pl-4 text-[15px] leading-relaxed"
+          className="max-h-48 min-h-12 py-3.5 pl-4 text-base leading-relaxed"
         />
         <InputGroupAddon align="inline-end" className="pr-2 pb-2 self-end">
           <InputGroupButton

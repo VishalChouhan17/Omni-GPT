@@ -138,8 +138,8 @@
 .markdown-body,
 [data-streamdown] {
   color: var(--foreground);
-  line-height: 1.7;
-  font-size: 0.9375rem;
+  line-height: 1.75;
+  font-size: 1rem;
   word-break: break-word;
 }
 
@@ -158,16 +158,16 @@
   line-height: 1.35;
 }
 
-.markdown-body h1, [data-streamdown] h1 { font-size: 1.625rem; }
-.markdown-body h2, [data-streamdown] h2 { font-size: 1.35rem; }
-.markdown-body h3, [data-streamdown] h3 { font-size: 1.15rem; }
+.markdown-body h1, [data-streamdown] h1 { font-size: 1.75rem; }
+.markdown-body h2, [data-streamdown] h2 { font-size: 1.45rem; }
+.markdown-body h3, [data-streamdown] h3 { font-size: 1.25rem; }
 .markdown-body h4, [data-streamdown] h4 { font-size: 1rem; }
 
 .markdown-body p,
 [data-streamdown] p {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .markdown-body strong,
